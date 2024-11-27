@@ -10,7 +10,10 @@ export default function MenuGrid() {
           <h3 className="text-2xl font-semibold mb-4">
             Convocatorias para Contratación de Servicios
           </h3>
-          <Link href="/public/servicios" className="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-6 rounded-full mt-4 flex items-center justify-center">
+          <Link
+            href="/modules/servicios"
+            className="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-6 rounded-full mt-4 flex items-center justify-center"
+          >
             VER <span className="ml-2">→</span>
           </Link>
         </div>
@@ -19,7 +22,10 @@ export default function MenuGrid() {
           <h3 className="text-2xl font-semibold mb-4">
             Convocatorias para Adquisición de Bienes
           </h3>
-          <Link href="/public/bienes" className="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-6 rounded-full mt-4 flex items-center justify-center">
+          <Link
+            href="/modules/bienes"
+            className="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-6 rounded-full mt-4 flex items-center justify-center"
+          >
             VER <span className="ml-2">→</span>
           </Link>
         </div>
@@ -28,7 +34,10 @@ export default function MenuGrid() {
           <h3 className="text-2xl font-semibold mb-4">
             Modificaciones al Cuadro CMN (Anexo 06)
           </h3>
-          <Link href="/public/modificaciones" className="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-6 rounded-full mt-4 flex items-center justify-center">
+          <Link
+            href="/public/modificaciones"
+            className="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-6 rounded-full mt-4 flex items-center justify-center"
+          >
             VER <span className="ml-2">→</span>
           </Link>
         </div>

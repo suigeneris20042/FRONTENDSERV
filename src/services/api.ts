@@ -8,7 +8,10 @@ const api = axios.create({
 // Interceptor para agregar encabezados de autorización
 api.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem("token");
+    const token = document.cookie
+      .split("; ")
+      .find((row) => row.startsWith("token="))
+      ?.split("=")[1];
 
     if (token && config.headers) {
       config.headers["Authorization"] = `Bearer ${token}`;
@@ -16,9 +19,7 @@ api.interceptors.request.use(
 
     return config;
   },
-  (error) => {
-    return Promise.reject(error);
-  }
+  (error) => Promise.reject(error)
 );
 
 // Interceptor para manejar errores globalmente
@@ -27,7 +28,7 @@ api.interceptors.response.use(
   (error) => {
     if (error.response?.status === 401) {
       console.error("No autorizado. Redirigiendo al login...");
-      window.location.href = "/login"; // Redirige al login
+      window.location.href = "/login";
     } else if (error.response) {
       console.error(
         `Error en la API (${error.response.status}): ${

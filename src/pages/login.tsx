@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import api from "../services/api";
-import { setAuthToken } from "../utils/authHelpers";
+import api from "@/services/api";
+import { setAuthToken } from "@/utils/authHelpers";
 
 const Login = () => {
   const [credentials, setCredentials] = useState({ email: "", password: "" });
@@ -20,8 +20,8 @@ const Login = () => {
       const response = await api.post("/auth/login", credentials);
       const { token } = response.data;
 
-      setAuthToken(token); // Guardar token
-      window.location.href = "/manage"; // Redirigir
+      setAuthToken(token); // Guardar token en cookies
+      window.location.href = "/modules/manage"; // Redirigir a la página protegida
     } catch (err: any) {
       setError(err.response?.data?.message || "Error al iniciar sesión");
     } finally {
@@ -33,12 +33,11 @@ const Login = () => {
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-md w-80">
         <h1 className="text-2xl font-bold mb-4 text-center">Iniciar Sesión</h1>
-        
+
         <div className="mb-4">
-          <label htmlFor="email" className="block text-sm font-medium text-gray-700 bg ">
+          <label htmlFor="email" className="block text-sm font-medium text-gray-700">
             Correo Electrónico
           </label>
-          
           <input
             type="email"
             id="email"
@@ -49,6 +48,7 @@ const Login = () => {
             required
           />
         </div>
+
         <div className="mb-4">
           <label htmlFor="password" className="block text-sm font-medium text-gray-700">
             Contraseña
@@ -63,6 +63,7 @@ const Login = () => {
             required
           />
         </div>
+
         {error && <p className="text-red-500 p-4">{error}</p>}
         <button
           type="submit"
@@ -79,4 +80,3 @@ const Login = () => {
 };
 
 export default Login;
-

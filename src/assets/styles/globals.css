@@ -5,12 +5,14 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --customRed: #E63946;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
+    --customRed: #FF4A4A;
   }
 }
 
@@ -24,4 +26,15 @@ body {
   .text-balance {
     text-wrap: balance;
   }
+    .border-customRed {
+      border-color: var(--customRed);
+    }
+    .bg-customRed {
+      background-color: var(--customRed);
+    }
+    .text-customRed {
+      color: var(--customRed);
+    }
+  
+  
 }

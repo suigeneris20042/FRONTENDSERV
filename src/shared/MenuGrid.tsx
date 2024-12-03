@@ -11,7 +11,7 @@ export default function MenuGrid() {
             Convocatorias para Contratación de Servicios
           </h3>
           <Link
-            href="/modules/servicios"
+            href="/servicios"
             className="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-6 rounded-full mt-4 flex items-center justify-center"
           >
             VER <span className="ml-2">→</span>
@@ -23,7 +23,7 @@ export default function MenuGrid() {
             Convocatorias para Adquisición de Bienes
           </h3>
           <Link
-            href="/modules/bienes"
+            href="/bienes"
             className="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-6 rounded-full mt-4 flex items-center justify-center"
           >
             VER <span className="ml-2">→</span>
@@ -35,7 +35,7 @@ export default function MenuGrid() {
             Modificaciones al Cuadro CMN (Anexo 06)
           </h3>
           <Link
-            href="/public/modificaciones"
+            href="/modificaciones"
             className="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-6 rounded-full mt-4 flex items-center justify-center"
           >
             VER <span className="ml-2">→</span>

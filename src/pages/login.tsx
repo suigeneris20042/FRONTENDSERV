@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import api from "@/services/api";
-import { setAuthToken } from "@/utils/authHelpers";
 
 const Login = () => {
   const [credentials, setCredentials] = useState({ email: "", password: "" });
@@ -18,12 +17,20 @@ const Login = () => {
 
     try {
       const response = await api.post("/auth/login", credentials);
-      const { token } = response.data;
 
-      setAuthToken(token); // Guardar token en cookies
-      window.location.href = "/modules/manage"; // Redirigir a la página protegida
+      // Verifica si la respuesta incluye el token
+      if (response.status === 200) {
+        console.log("Inicio de sesión exitoso");
+        // Redirigir a la página protegida
+        window.location.href = "/manage";
+      }
     } catch (err: any) {
-      setError(err.response?.data?.message || "Error al iniciar sesión");
+      // Maneja errores específicos del backend
+      if (err.response?.data?.message) {
+        setError(err.response.data.message);
+      } else {
+        setError("Error al iniciar sesión");
+      }
     } finally {
       setLoading(false);
     }

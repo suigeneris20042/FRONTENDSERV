@@ -1,12 +1,47 @@
-export const setAuthToken = (token: string) => {
-  document.cookie = `token=${token}; path=/; Secure; HttpOnly; SameSite=Strict`;
+/**
+ * Verifica si el usuario está autenticado llamando al backend.
+ * Devuelve `true` si el usuario está autenticado, `false` en caso contrario.
+ */
+export const isAuthenticated = async (): Promise<boolean> => {
+  try {
+    const response = await fetch("/api/auth/check", { credentials: "include" });
+
+    if (!response.ok) {
+      return false;
+    }
+
+    const data = await response.json();
+    return data.authenticated;
+  } catch (error) {
+    console.error("Error al verificar autenticación:", error);
+    return false;
+  }
 };
 
-export const getAuthToken = (): string | null => {
-  const match = document.cookie.match(/(^|;) ?token=([^;]*)(;|$)/);
-  return match ? match[2] : null;
+/**
+ * Cierra sesión llamando al backend.
+ * Esta función puede redirigir al usuario al login si se completa exitosamente.
+ */
+export const logout = async (): Promise<void> => {
+  try {
+    const response = await fetch("/api/auth/logout", {
+      method: "POST",
+      credentials: "include",
+    });
+
+    if (response.ok) {
+      console.log("Sesión cerrada exitosamente");
+      window.location.href = "/login"; // Redirigir al login
+    } else {
+      console.error("Error al cerrar sesión");
+    }
+  } catch (error) {
+    console.error("Error al cerrar sesión:", error);
+  }
 };
 
-export const removeAuthToken = () => {
-  document.cookie = "token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
-};
+/**
+ * Verifica si esta autenticado 
+ */
+
+

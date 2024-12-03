@@ -3,24 +3,8 @@ import axios from "axios";
 const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
   timeout: parseInt(process.env.NEXT_PUBLIC_API_TIMEOUT || "5000"),
+  withCredentials: true, // Asegura que las cookies se envíen automáticamente
 });
-
-// Interceptor para agregar encabezados de autorización
-api.interceptors.request.use(
-  (config) => {
-    const token = document.cookie
-      .split("; ")
-      .find((row) => row.startsWith("token="))
-      ?.split("=")[1];
-
-    if (token && config.headers) {
-      config.headers["Authorization"] = `Bearer ${token}`;
-    }
-
-    return config;
-  },
-  (error) => Promise.reject(error)
-);
 
 // Interceptor para manejar errores globalmente
 api.interceptors.response.use(
@@ -28,7 +12,7 @@ api.interceptors.response.use(
   (error) => {
     if (error.response?.status === 401) {
       console.error("No autorizado. Redirigiendo al login...");
-      window.location.href = "/login";
+      window.location.href = "/login"; // Redirigir al login si la sesión expira
     } else if (error.response) {
       console.error(
         `Error en la API (${error.response.status}): ${
@@ -42,4 +26,22 @@ api.interceptors.response.use(
   }
 );
 
+/**
+ * Función para cerrar sesión.
+ * Llama al endpoint de logout en el servidor para eliminar la cookie HTTP-Only.
+ */
+export const logout = async (): Promise<void> => {
+  try {
+    const response = await api.post("/auth/logout");
+
+    if (response.status === 200) {
+      console.log("Sesión cerrada exitosamente");
+      window.location.href = "/login"; // Redirigir al login después del logout
+    }
+  } catch (error) {
+    console.error("Error al cerrar sesión:", error);
+  }
+};
+
 export default api;
+

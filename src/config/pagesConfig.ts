@@ -6,12 +6,12 @@ export const pagesConfig: {
     subtitle: "Bienvenido a nuestro sitio web",
     backgroundImage: "/images/frontisunsaac.jpg",
   },
-  "/modules/servicios": {
+  "/servicios": {
     title: "Servicios",
     subtitle: "Descubre todos los servicios disponibles",
     backgroundImage: "/images/frontisunsaac.jpg",
   },
-  "/modules/bienes": {
+  "/bienes": {
     title: "Bienes",
     subtitle: "Explora nuestra lista de bienes",
     backgroundImage: "/images/frontisunsaac.jpg",

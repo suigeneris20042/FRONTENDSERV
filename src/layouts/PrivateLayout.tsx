@@ -1,30 +1,26 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { isAuthenticated } from "@/utils/authHelpers";
+import { logout } from "@/services/api"; // Importa logout desde api.ts
 import Sidebard from "@/shared/Sidebard";
 import Navbard from "@/shared/Navbard";
-import api from "@/services/api";
 
 const PrivateLayout = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
   const [loading, setLoading] = useState(true);
 
-  const handleLogout = async () => {
-    try {
-      await api.post("/auth/logout"); // Llamada al backend para cerrar sesión
-      router.push("/login"); // Redirigir al login
-    } catch (error) {
-      console.error("Error al cerrar sesión:", error);
-    }
-  };
-
   useEffect(() => {
     const checkAuth = async () => {
-      const auth = await isAuthenticated();
-      if (!auth) {
+      try {
+        const auth = await isAuthenticated();
+        if (!auth && router.pathname !== "/login") {
+          router.push("/login");
+        } else {
+          setLoading(false);
+        }
+      } catch (error) {
+        console.error("Error al verificar autenticación:", error);
         router.push("/login");
-      } else {
-        setLoading(false);
       }
     };
 
@@ -41,7 +37,7 @@ const PrivateLayout = ({ children }: { children: React.ReactNode }) => {
       <Sidebard />
       <div className="flex-1 flex flex-col">
         {/* Barra de navegación */}
-        <Navbard onLogout={handleLogout} /> {/* Pasar la función de logout */}
+        <Navbard onLogout={logout} /> {/* Usa la función logout importada */}
         {/* Contenido principal */}
         <main className="flex-1 overflow-y-auto p-4">{children}</main>
       </div>

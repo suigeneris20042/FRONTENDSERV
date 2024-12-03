@@ -4,7 +4,10 @@
  */
 export const isAuthenticated = async (): Promise<boolean> => {
   try {
-    const response = await fetch("/api/auth/check", { credentials: "include" });
+    const response = await fetch("http://localhost:3001/api/auth/check", {
+      method: "GET",
+      credentials: "include", // Enviar cookies
+    });
 
     if (!response.ok) {
       return false;
@@ -17,6 +20,7 @@ export const isAuthenticated = async (): Promise<boolean> => {
     return false;
   }
 };
+
 
 /**
  * Cierra sesión llamando al backend.

@@ -1,6 +1,11 @@
 import Link from "next/link";
+import { logout } from "@/services/api";
 
 const Sidebard = () => {
+  const handleLogout = async () => {
+    await logout();
+  };
+
   return (
     <aside className="w-64 bg-gray-900 text-white flex flex-col">
       <div className="px-6 py-4 text-2xl font-bold">One</div>
@@ -24,10 +29,7 @@ const Sidebard = () => {
         </ul>
       </nav>
       <button
-        onClick={() => {
-          document.cookie = "token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
-          window.location.href = "/login";
-        }}
+        onClick={handleLogout}
         className="block w-full px-6 py-3 text-left hover:bg-gray-700"
       >
         Logout

@@ -1,4 +1,3 @@
-import React from "react";
 import PrivateLayout from "@/layouts/PrivateLayout";
 
 const ManagePage = () => {
@@ -29,4 +28,3 @@ ManagePage.getLayout = (page: React.ReactElement) => (
 );
 
 export default ManagePage;
-

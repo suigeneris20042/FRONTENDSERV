@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { isAuthenticated } from "@/utils/authHelpers";
-import { logout } from "@/services/api"; // Importa logout desde api.ts
+import { logout } from "@/services/api"; // Función logout importada
 import Sidebard from "@/shared/Sidebard";
 import Navbard from "@/shared/Navbard";
 
@@ -13,7 +13,7 @@ const PrivateLayout = ({ children }: { children: React.ReactNode }) => {
     const checkAuth = async () => {
       try {
         const auth = await isAuthenticated();
-        if (!auth && router.pathname !== "/login") {
+        if (!auth) {
           router.push("/login");
         } else {
           setLoading(false);
@@ -33,13 +33,13 @@ const PrivateLayout = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <div className="flex h-screen">
-      {/* Barra lateral */}
+      {/* Sidebar fijo */}
       <Sidebard />
-      <div className="flex-1 flex flex-col">
-        {/* Barra de navegación */}
-        <Navbard onLogout={logout} /> {/* Usa la función logout importada */}
+      <div className="flex-1 flex flex-col ml-64">
+        {/* Navbar fijo */}
+        <Navbard onLogout={logout} />
         {/* Contenido principal */}
-        <main className="flex-1 overflow-y-auto p-4">{children}</main>
+        <main className="flex-1 overflow-y-auto p-6 bg-gray-100">{children}</main>
       </div>
     </div>
   );

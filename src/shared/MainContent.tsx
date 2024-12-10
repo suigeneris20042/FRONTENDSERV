@@ -30,11 +30,18 @@ export default function MainContent({
       const fetchPublicaciones = async () => {
         try {
           setLoading(true); // Activar indicador de carga
-          const response = await api.get<Publicacion[]>(
-            `${apiUrl}/${selectedAnio}`
-          );
-          setPublicaciones(response.data); // Guardar datos en el estado
-          setError(null); // Reiniciar errores si la solicitud fue exitosa
+          const response = await api.get<{
+            success: boolean;
+            data: Publicacion[];
+          }>(`${apiUrl}/${selectedAnio}`);
+
+          // Acceder a response.data.data
+          if (response.data.success) {
+            setPublicaciones(response.data.data); // Guardar el array de publicaciones
+            setError(null); // Reiniciar errores si la solicitud fue exitosa
+          } else {
+            setError("No se pudo obtener las publicaciones.");
+          }
         } catch (err: any) {
           console.error("Error:", err); // Mostrar error en consola
           setError(

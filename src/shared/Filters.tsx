@@ -18,13 +18,22 @@ export default function Filters({ apiUrl, onAnioSelect }: FiltersProps) {
   const fetchAnios = async () => {
     try {
       setLoading(true); // Activar el indicador de carga
-      const response = await api.get<string[]>(`${apiUrl}/`);
-      setAnios(response.data);
+      const response = await api.get<{ success: boolean; data: string[] }>(
+        `${apiUrl}/`
+      );
 
-      if (response.data.length > 0) {
-        const defaultAnio = response.data[0];
-        setSelectedAnio(defaultAnio); // Seleccionar el primer año por defecto
-        onAnioSelect(defaultAnio); // Informar al padre
+      console.log("Respuesta de la API:", response.data);
+
+      if (response.data.success && Array.isArray(response.data.data)) {
+        setAnios(response.data.data);
+
+        if (response.data.data.length > 0) {
+          const defaultAnio = response.data.data[0];
+          setSelectedAnio(defaultAnio); // Seleccionar el primer año por defecto
+          onAnioSelect(defaultAnio); // Informar al padre
+        }
+      } else {
+        throw new Error("Formato inesperado en la respuesta de la API.");
       }
     } catch (err: any) {
       console.error("Error al obtener los años:", err);
